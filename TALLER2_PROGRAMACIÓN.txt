@@ -1,0 +1,176 @@
+"""
+UNIVERSIDAD TECNOLÓGICA DE PEREIRA
+PROGRAMA DE INGENIERÍA ELECTRÓNICA / PROGRAMACIÓN II
+TALLER 2: BUCLE WHILE, FUNCIONES Y LAMBDA (PYTHON QUEST)
+
+Autor: Luis Mario Vélez
+Docente: Juan Pablo Tabares
+"""
+
+# ==========================================
+# RETO 1: Validación con While (Variador)
+# ==========================================
+def reto_1_validacion_while():
+    print("\n--- RETO 1: Validación de Corriente ---")
+    corriente = float(input("Ingrese lectura de corriente de fase (A): "))
+    while corriente <= 0:
+        print("⚠️ Error: La corriente debe ser mayor a 0 A.")
+        corriente = float(input("Reintente la lectura (A): "))
+    print(f"✅ Lectura válida registrada: {corriente} A")
+
+
+# ==========================================
+# RETO 2: Refactorización Carga Baterías
+# ==========================================
+def reto_2_calcular_carga(actual, maximo):
+    """Retorna el porcentaje de carga del banco de baterías UPS"""
+    return (actual / maximo) * 100
+
+
+# ==========================================
+# RETO 3: Argumentos Variables *args
+# ==========================================
+def reto_3_procesar_voltajes(*voltajes):
+    """Acepta un número dinámico de sensores de voltaje"""
+    if not voltajes:
+        return 0
+    return sum(voltajes) / len(voltajes)
+
+
+# ==========================================
+# RETO 4: Bucle Interactivo Servidores
+# ==========================================
+def reto_4_menu_servidores():
+    print("\n--- RETO 4: Consola de Control de Rack ---")
+    while True:
+        comando = input("Ingrese comando (MEDIR / SALIR): ").strip().upper()
+        if comando == "SALIR":
+            print("Cerrando sesión del sistema...")
+            break
+        elif comando == "MEDIR":
+            print("Procesando temperatura del CPU...")
+        else:
+            continue
+
+
+# ==========================================
+# RETO 5: Expresión Lambda Escalado ADC
+# ==========================================
+adc_a_voltios = lambda raw_adc: (raw_adc / 1024.0) * 5.0
+
+
+# ==========================================
+# RETO 6: Parámetros por Defecto
+# ==========================================
+def reto_6_activar_rele(puerto, tiempo=1.0):
+    print(f"⚡ Relé en puerto '{puerto}' activado por {tiempo} segundo(s).")
+
+
+# ==========================================
+# RETO 7: Orden Estricto de Parámetros
+# ==========================================
+def reto_7_mover_articulacion(codo, base=0.0, hombro=90.0):
+    print(f"🤖 Brazo Robótico: Codo={codo}°, Base={base}°, Hombro={hombro}°")
+
+
+# ==========================================
+# RETO 8: Retorno Múltiple de Parámetros
+# ==========================================
+def reto_8_calcular_metricas(voltaje, corriente):
+    potencia = voltaje * corriente
+    resistencia = voltaje / corriente
+    return potencia, resistencia
+
+
+# ==========================================
+# RETO 9: Argumentos Nombrados **kwargs
+# ==========================================
+def reto_9_registrar_alarma(nivel_critico, **parametros_extra):
+    print(f"\n🚨 ALARMA SCADA - Nivel: {nivel_critico}")
+    for clave, valor in parametros_extra.items():
+        print(f" - {clave.capitalize()}: {valor}")
+
+
+# ==========================================
+# RETO 10: Ámbito de Variables (global)
+# ==========================================
+ESTADO_SISTEMA = "OK"
+
+def reto_10_modificar_estado(nuevo_estado):
+    global ESTADO_SISTEMA
+    ESTADO_SISTEMA = nuevo_estado
+    print(f"🔄 Estado del sistema actualizado a: {ESTADO_SISTEMA}")
+
+
+# ==========================================
+# RETO 11: Transformación con Lambda y Map
+# ==========================================
+def reto_11_calibrar_sensores():
+    lecturas = [23.5, 24.1, 22.8]
+    calibradas = list(map(lambda temp: temp + 0.5, lecturas))
+    return lecturas, calibradas
+
+
+# ==========================================
+# RETO 12: Ejercicio Integrador (IoT/SCADA)
+# ==========================================
+def reto_12_procesar_planta_iot(nombre_node, *muestras, **metadata):
+    if not muestras:
+        return None
+    return {
+        "nodo": nombre_node,
+        "total_registros": len(muestras),
+        "valor_max": max(muestras),
+        "valor_min": min(muestras),
+        "promedio": round(sum(muestras) / len(muestras), 2),
+        "detalles": metadata
+    }
+
+
+# ==========================================
+# BLOQUE PRINCIPAL DE EJECUCIÓN PRUEBA LOCAL
+# ==========================================
+if __name__ == "__main__":
+    print("==================================================")
+    print("  EJECUTANDO PRUEBAS EN LOCAL - TALLER 2 UTP")
+    print("==================================================")
+    
+    # Prueba Reto 2
+    carga = reto_2_calcular_carga(42.0, 50.0)
+    print(f"▶ Reto 2 (Carga Batería): {carga}%")
+    
+    # Prueba Reto 3
+    prom_v = reto_3_procesar_voltajes(12.1, 12.8, 13.5)
+    print(f"▶ Reto 3 (Promedio Voltajes *args): {prom_v:.2f} V")
+    
+    # Prueba Reto 5
+    v_medido = adc_a_voltios(512)
+    print(f"▶ Reto 5 (Conversión Lambda 512 ADC): {v_medido:.2f} V")
+    
+    # Prueba Reto 6
+    reto_6_activar_rele("GPIO_17")
+    
+    # Prueba Reto 7
+    reto_7_mover_articulacion(45.0)
+    
+    # Prueba Reto 8
+    p, r = reto_8_calcular_metricas(220.0, 10.0)
+    print(f"▶ Reto 8 (Retorno Múltiple): Potencia = {p} W | Resistencia = {r} Ω")
+    
+    # Prueba Reto 9
+    reto_9_registrar_alarma("ALTO", zona="Bodega 3", presion_bar=4.2, operador="Tech_01")
+    
+    # Prueba Reto 10
+    reto_10_modificar_estado("CRÍTICO")
+    
+    # Prueba Reto 11
+    orig, calib = reto_11_calibrar_sensores()
+    print(f"▶ Reto 11 (Lambda + Map): Originales={orig} -> Calibradas={calib}")
+    
+    # Prueba Reto 12
+    reporte = reto_12_procesar_planta_iot("NODO_CALDERA_01", 12.0, 14.5, 13.2, ubicacion="Planta Alta")
+    print(f"▶ Reto 12 (Integrador SCADA): {reporte}")
+    
+    print("\n==================================================")
+    print("  PRUEBAS AUTOMÁTICAS FINALIZADAS CON ÉXITO")
+    print("==================================================")
